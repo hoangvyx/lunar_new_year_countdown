@@ -3,6 +3,7 @@ import { getTetDate, formatSolarDate, MIN_YEAR, MAX_YEAR } from './lunar.js';
 import { getCanChi } from './canchi.js';
 import { getDefaultYear, getStatus } from './countdown.js';
 import { pickJoke } from './jokes.js';
+import { launchFireworks } from './fireworks.js';
 
 const $ = (id) => document.getElementById(id);
 const els = {
@@ -34,6 +35,8 @@ let lastState = null;
 let jokeIndex = -1;
 let jokeDays = null;
 let toastTimer;
+let fireworksRunning = false;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 function renderYear() {
   const { ten, emoji } = getCanChi(year);
@@ -56,6 +59,13 @@ function celebrate() {
   toastTimer = setTimeout(() => {
     els.toast.hidden = true;
   }, 5000);
+
+  // Người dùng giảm chuyển động thì chỉ hiện lời chúc; đang bắn thì không bắn chồng.
+  if (reduceMotion.matches || fireworksRunning) return;
+  fireworksRunning = true;
+  launchFireworks(els.canvas).then(() => {
+    fireworksRunning = false;
+  });
 }
 
 function tick() {
