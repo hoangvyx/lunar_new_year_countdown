@@ -23,8 +23,8 @@ describe('getTetDate', () => {
   });
 
   it('nhận đúng hai đầu khoảng năm', () => {
-    expect(getTetDate(MIN_YEAR).year).toBe(1900);
-    expect(getTetDate(MAX_YEAR).year).toBe(2100);
+    expect(getTetDate(MIN_YEAR)).toEqual({ year: 1900, month: 1, day: 31 });
+    expect(getTetDate(MAX_YEAR)).toEqual({ year: 2100, month: 2, day: 9 });
   });
 
   it('ném RangeError khi năm ngoài 1900–2100', () => {

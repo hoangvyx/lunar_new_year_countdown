@@ -14,8 +14,8 @@ export function launchFireworks(canvas, durationMs = 5000) {
   window.addEventListener('resize', resize);
 
   const particles = [];
-  const start = performance.now();
-  let nextBurst = start;
+  let start;
+  let nextBurst;
 
   function burst() {
     const x = window.innerWidth * (0.15 + Math.random() * 0.7);
@@ -39,6 +39,8 @@ export function launchFireworks(canvas, durationMs = 5000) {
 
   return new Promise((resolve) => {
     function frame(t) {
+      start ??= t;
+      nextBurst ??= t;
       const elapsed = t - start;
       if (elapsed < durationMs && t >= nextBurst) {
         burst();
