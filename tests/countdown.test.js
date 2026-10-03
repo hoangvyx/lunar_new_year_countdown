@@ -23,6 +23,12 @@ describe('getDefaultYear', () => {
   it('sang mùng 2 thì chuyển sang Tết 2028', () => {
     expect(getDefaultYear(TET_2027 + DAY_MS)).toBe(2028);
   });
+
+  it('không vượt quá 1900–2100 khi đồng hồ ở ngoài khoảng', () => {
+    expect(getDefaultYear(vn(2100, 6, 1))).toBe(2100);
+    expect(getDefaultYear(vn(2150, 1, 1))).toBe(2100);
+    expect(getDefaultYear(vn(1850, 1, 1))).toBe(1900);
+  });
 });
 
 describe('getStatus', () => {

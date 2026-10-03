@@ -1,4 +1,4 @@
-import { getTetInstant } from './lunar.js';
+import { getTetInstant, MIN_YEAR, MAX_YEAR } from './lunar.js';
 
 const SECOND_MS = 1000;
 const MINUTE_MS = 60 * SECOND_MS;
@@ -7,9 +7,11 @@ export const DAY_MS = 24 * HOUR_MS;
 const VN_OFFSET_MS = 7 * HOUR_MS;
 
 // Tết gần nhất chưa qua hết ngày mùng 1, tính theo giờ Việt Nam.
+// Kẹp trong MIN_YEAR..MAX_YEAR để đồng hồ sai không làm sập trang.
 export function getDefaultYear(now) {
-  const year = new Date(now + VN_OFFSET_MS).getUTCFullYear();
-  return now < getTetInstant(year) + DAY_MS ? year : year + 1;
+  const vnYear = new Date(now + VN_OFFSET_MS).getUTCFullYear();
+  const year = Math.min(Math.max(vnYear, MIN_YEAR), MAX_YEAR);
+  return year < MAX_YEAR && now >= getTetInstant(year) + DAY_MS ? year + 1 : year;
 }
 
 function split(ms) {

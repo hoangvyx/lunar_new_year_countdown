@@ -31,6 +31,8 @@ const els = {
 const pad2 = (n) => String(n).padStart(2, '0');
 
 let year = getDefaultYear(Date.now());
+// Đang xem Tết gần nhất thì tự chuyển sang năm sau khi hết mùng 1.
+let autoYear = true;
 let lastState = null;
 let jokeIndex = -1;
 let jokeDays = null;
@@ -69,7 +71,17 @@ function celebrate() {
 }
 
 function tick() {
-  const status = getStatus(year, Date.now());
+  const now = Date.now();
+  if (autoYear) {
+    const next = getDefaultYear(now);
+    if (next !== year) {
+      year = next;
+      jokeDays = null;
+      renderYear();
+    }
+  }
+
+  const status = getStatus(year, now);
   const upcoming = status.state === 'sap-toi';
   els.countdown.hidden = !upcoming;
   els.jokeBox.hidden = !upcoming;
@@ -99,6 +111,7 @@ function setYear(next) {
   }
   els.yearError.hidden = true;
   year = next;
+  autoYear = next === getDefaultYear(Date.now());
   lastState = null;
   jokeDays = null;
   renderYear();
