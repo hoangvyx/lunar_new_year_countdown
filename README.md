@@ -9,6 +9,8 @@ Trang web đếm ngược đến Tết Nguyên Đán (mùng 1 tháng Giêng âm 
 
 Âm lịch tính theo thuật toán của Hồ Ngọc Đức với múi giờ UTC+7, nên đúng cả những năm Tết Việt khác Tết Trung Quốc (1985, 2007, 2030).
 
+> **Lưu ý với các năm cũ:** trang dùng UTC+7 cho mọi năm. Trước năm 1968, âm lịch ở Việt Nam tính theo UTC+8 (miền Nam dùng đến năm 1975), nên với một số năm trước đó, ngày Tết hiển thị có thể lệch một ngày so với ngày người ta thực sự ăn Tết khi ấy. Ví dụ Tết Mậu Thân 1968: trang ra 29/01 (giống miền Bắc), còn miền Nam ăn Tết ngày 30/01.
+
 ## Chạy trên máy
 
 ```bash
