@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đếm Ngày Đến Tết</title>
+    <meta name="description" content="Còn bao nhiêu ngày nữa đến Tết Nguyên Đán? Đếm ngược theo giờ Việt Nam." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧧</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <canvas id="fireworks" aria-hidden="true"></canvas>
+
+    <main class="card">
+      <h1 class="title">Còn bao lâu nữa đến Tết?</h1>
+      <p class="year-name">
+        <span id="year-name"></span>
+        <span id="year-emoji" aria-hidden="true"></span>
+      </p>
+      <p id="solar-date" class="solar-date"></p>
+
+      <section id="countdown" class="countdown">
+        <div class="unit"><span id="days" class="num">0</span><span class="label">Ngày</span></div>
+        <div class="unit"><span id="hours" class="num">00</span><span class="label">Giờ</span></div>
+        <div class="unit"><span id="minutes" class="num">00</span><span class="label">Phút</span></div>
+        <div class="unit"><span id="seconds" class="num">00</span><span class="label">Giây</span></div>
+      </section>
+      <p id="message" class="message" hidden></p>
+
+      <section id="joke-box" class="joke-box">
+        <p id="joke" class="joke"></p>
+        <button id="next-joke" class="btn btn-ghost" type="button">Câu khác 🔄</button>
+      </section>
+
+      <section class="year-picker">
+        <label for="year-input">Năm:</label>
+        <button id="prev-year" class="btn btn-round" type="button" aria-label="Năm trước">◀</button>
+        <input id="year-input" type="number" min="1900" max="2100" inputmode="numeric" />
+        <button id="next-year" class="btn btn-round" type="button" aria-label="Năm sau">▶</button>
+      </section>
+      <p id="year-error" class="year-error" hidden>Chỉ xem được từ 1900 đến 2100 thôi nha 😅</p>
+
+      <button id="fire" class="btn btn-gold" type="button">Bắn thử 🎆</button>
+    </main>
+
+    <div id="toast" class="toast" role="status" hidden>🎉 Chúc Mừng Năm Mới!</div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
