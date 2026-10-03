@@ -20,6 +20,13 @@ describe('pickJoke', () => {
     expect(pickJoke(5, { random: () => 0, exclude: 0 }).index).toBe(1);
   });
 
+  it('ngày cuối nói "chưa đầy 1 ngày" thay vì "0 ngày"', () => {
+    expect(pickJoke(0, { random: () => 0 }).text)
+      .toBe('Còn chưa đầy 1 ngày nữa là được lì xì, ráng ngoan nha!');
+    expect(pickJoke(0, { random: () => 0.11 }).text)
+      .toBe('Chưa đầy 1 ngày nữa thôi, bánh chưng đang trên đường đến với bạn.');
+  });
+
   it('random gần 1 thì chọn câu cuối', () => {
     expect(pickJoke(5, { random: () => 0.9999 }).index).toBe(JOKES.length - 1);
   });

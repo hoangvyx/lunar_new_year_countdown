@@ -24,5 +24,7 @@ export const JOKES = [
 export function pickJoke(days, { random = Math.random, exclude = -1 } = {}) {
   const candidates = JOKES.map((_, i) => i).filter((i) => i !== exclude);
   const index = candidates[Math.floor(random() * candidates.length)];
-  return { index, text: JOKES[index].replaceAll('{ngay}', String(days)) };
+  // Ngày cuối: "Còn 0 ngày" nghe kỳ, nói "chưa đầy 1 ngày" (viết hoa nếu đứng đầu câu).
+  const text = JOKES[index].replaceAll('{ngay}', days === 0 ? 'chưa đầy 1' : String(days));
+  return { index, text: text[0].toUpperCase() + text.slice(1) };
 }

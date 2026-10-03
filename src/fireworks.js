@@ -1,6 +1,8 @@
 const COLORS = ['#ffd54f', '#ffe082', '#ff8a65', '#ff5252', '#fff8e1', '#ffab40'];
 const GRAVITY = 0.04;
 const FRICTION = 0.985;
+// Các hằng số trên tính cho một khung hình 60 Hz.
+const FRAME_MS = 1000 / 60;
 
 export function launchFireworks(canvas, durationMs = 5000) {
   const ctx = canvas.getContext('2d');
@@ -15,6 +17,7 @@ export function launchFireworks(canvas, durationMs = 5000) {
 
   const particles = [];
   let start;
+  let last;
   let nextBurst;
 
   function burst() {
@@ -47,14 +50,20 @@ export function launchFireworks(canvas, durationMs = 5000) {
         nextBurst = t + 350 + Math.random() * 400;
       }
 
+      // Số khung 60 Hz đã trôi qua, để màn 120/144 Hz chạy cùng tốc độ.
+      // Kẹp 50 ms cho khỏi giật khi tab bị ẩn rồi mở lại.
+      const k = Math.min(t - (last ?? t), 50) / FRAME_MS;
+      last = t;
+      const friction = FRICTION ** k;
+
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
-        p.vx *= FRICTION;
-        p.vy = p.vy * FRICTION + GRAVITY;
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life -= p.decay;
+        p.vx *= friction;
+        p.vy = p.vy * friction + GRAVITY * k;
+        p.x += p.vx * k;
+        p.y += p.vy * k;
+        p.life -= p.decay * k;
         if (p.life <= 0) {
           particles.splice(i, 1);
           continue;
