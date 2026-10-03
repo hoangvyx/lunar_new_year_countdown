@@ -55,7 +55,8 @@ vuive/
 - API:
   - `getTetDate(year) → { year, month, day }`: ngày dương lịch của mùng 1 tháng Giêng âm lịch năm `year`.
   - `getTetInstant(year) → number`: mốc thời gian (ms, kiểu epoch) của **00:00 giờ Việt Nam** ngày Tết, tức `Date.UTC(y, m-1, d) - 7 giờ`.
-- Gặp năm ngoài khoảng 1900–2100, hàm ném `RangeError`.
+  - `formatSolarDate({ year, month, day }) → string`: ví dụ "Thứ Bảy, 06/02/2027".
+- Gặp năm ngoài khoảng 1900–2100, `getTetDate` và `getTetInstant` ném `RangeError`.
 
 ### 4.2 `canchi.js`
 
@@ -79,7 +80,7 @@ vuive/
 ### 4.4 `jokes.js`
 
 - Khoảng 20 câu mẫu chứa chỗ trống `{ngay}`, ví dụ "Còn {ngay} ngày nữa là được lì xì, ráng ngoan nha!".
-- `pickJoke(days, random = Math.random, exclude?) → string`: thay `{ngay}` bằng số ngày và tránh lặp lại đúng câu vừa hiện.
+- `pickJoke(days, { random = Math.random, exclude = -1 } = {}) → { index, text }`: thay `{ngay}` bằng số ngày. `exclude` là chỉ số của câu vừa hiện, để không lặp lại đúng câu đó.
 - Câu nói vui chỉ hiện ở trạng thái `sap-toi`.
 
 ### 4.5 `fireworks.js`
@@ -127,7 +128,7 @@ Thiết kế cho điện thoại trước. Tông màu đỏ son + vàng kim. Kho
 
 | Năm | Ngày Tết | Ghi chú |
 |---|---|---|
-| 1985 | 21/02 | Khác Trung Quốc (20/02): kiểm tra đúng múi giờ UTC+7 |
+| 1985 | 21/01 | Khác Trung Quốc (20/02), lệch cả tháng: kiểm tra đúng múi giờ UTC+7 |
 | 2000 | 05/02 | |
 | 2007 | 17/02 | Khác Trung Quốc (18/02): kiểm tra đúng múi giờ UTC+7 |
 | 2020 | 25/01 | |
@@ -138,7 +139,7 @@ Thiết kế cho điện thoại trước. Tông màu đỏ son + vàng kim. Kho
 | 2027 | 06/02 | |
 | 2028 | 26/01 | |
 | 2029 | 13/02 | |
-| 2030 | 03/02 | |
+| 2030 | 02/02 | Khác Trung Quốc (03/02) |
 
 Ngoài bảng trên, `lunar.test.js` còn kiểm tra `getTetInstant(2027)` bằng `Date.UTC(2027, 1, 5, 17)`, và năm 1899 hoặc 2101 ném `RangeError`.
 
